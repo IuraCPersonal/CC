@@ -12,6 +12,7 @@
 \usepackage{pgfplots}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage[normalem]{ulem}
 
 % <--------- Mathematics ---------> %
 
@@ -31,6 +32,8 @@
 \usepackage{caption}
 % \usepackage[parfill]{parskip}
 \usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{lipsum}
 
 
 %===========================================%
@@ -107,37 +110,20 @@ resources required to execute it.
 
 \subsection{Introduction}
 
-The current paper work represents my implementation of four sorting algorithms. 
+The current paper work represents my implementation of five Sieve of Eratosthenes algorithms. 
 
 \hfill \break
-\indent A Sorting Algorithm is used to rearrange a given array or list elements according to a comparison operator on the elements. The comparison operator is used to decide the new order of element in the respective data structure.
+\indent The Sieve of Eratosthenes is a method for finding all primes up to (and possibly including) a given natural. This method works well when is relatively small, allowing us to determine whether any natural number less than or equal to is prime or composite.
 
-From the beginning of computing, the sorting problem has attracted 
-a great deal of research, perhaps due to the complexity of solving 
-it efficiently despite its simple, familiar statement. Among the 
-authors of early sorting algorithms around 1951 was Betty Holberton, 
-who worked on \textbf{ENIAC} and \textbf{UNIVAC}. Bubble sort was analyzed as early 
-as 1956. Asymptotically optimal algorithms have been known since the 
-mid-20th century - new algorithms are still being invented, with the 
-widely used Timsort dating to 2002, and the library sort being first 
-published in 2006.
-
-Comparison sorting algorithms have a fundamental requirement of $\Omega(nlogn)$
-comparisons (some input sequences will require a multiple of n log n comparisons, 
-where n is the number of elements in the array to be sorted). Algorithms not based 
-on comparisons, such as counting sort, can have better performance.
-
-Sorting algorithms are prevalent in introductory computer science classes, 
-where the abundance of algorithms for the problem provides a gentle introduction 
-to a variety of core algorithm concepts, such as big O notation, divide and conquer 
-algorithms, data structures such as heaps and binary trees, randomized algorithms, 
-best, worst and average case analysis, time-space tradeoffs, and upper and lower bounds.
-
-Sorting small arrays optimally (in fewest comparisons and swaps) or fast 
-(i.e. taking into account machine specific details) is still an open research 
-problem, with solutions only known for very small arrays (<20 elements). 
-Similarly optimal (by various definitions) sorting on a parallel machine is 
-an open research topic.
+It does so by iteratively marking as composite (i.e., not prime) the 
+multiples of each prime, starting with the first prime number. The 
+multiples of a given prime are generated as a sequence of numbers 
+starting from that prime, with constant difference between them that 
+is equal to that prime. This is the sieve's key distinction from 
+using trial division to sequentially test each candidate number for 
+divisibility by each prime. Once all the multiples of each discovered 
+prime have been marked as composites, the remaining unmarked numbers are 
+primes.
 
 \subsection{Objectives}
 
@@ -151,235 +137,210 @@ an open research topic.
 
 \subsection{Theoretical Notes}
 
-An algorithm is correct if for any instance of it
-ends with a correct output which is the solution to the calculation problem
-solved by the respective algorithm. Some algorithms, however, are incorrect
-In the sense that they do not lead to any finite time solution or lead to
-Wrong solutions, they can be useful as long as the errors they produce can be
-controlled.
+A prime number is a natural number that has exactly two distinct natural number divisors: the number 1 and itself.
 
-The behavior of the same algorithm may be different depending on
-input data. That is why great attention must be paid to them
-the latter. A variable present in the input of an algorithm can
-identify an array or object of a composite data and it will be treated
-as a pointer to the elements of the painting, respectively to the fields
-(attributes) of the corresponding object.
-
-How to define the size of the input data
-depends on the calculated calculation problem. It can be expressed by:
+To find all the prime numbers less than or equal to a given integer n by \textit{Eratosthenes' method}:
 
 \begin{itemize}
-  \item the number of items contained in the input data (for example,
-  the size of an array of integers);
-  \item the total number of bits in the binary representation of the data
-  entry;
-  \item two natural numbers
+  \item Create a list of consecutive integers from 2 through n: (2, 3, 4, ..., n).
+  \item Initially, let p equal 2, the smallest prime number.
+  \item Enumerate the multiples of p by counting in increments of p from 2p to n, and mark them in the list (these will be 2p, 3p, 4p, ...; the p itself should not be marked).
+  \item Find the smallest number in the list greater than p that is not marked. If there was no such number, stop. Otherwise, let p now equal this new number (which is the next prime), and repeat from step 3.
+  \item When the algorithm terminates, the numbers remaining not marked in the list are all the primes below n.
 \end{itemize}
 
-For each algorithm that solves a certain problem P
-it is necessary to specify how the input data size is expressed.
+The main idea here is that every value given to p will be prime, because if it were composite it would be marked as a multiple of some other, smaller prime. Note that some of the numbers may be marked more than once (e.g., 15 will be marked both for 3 and 5).
 
-If there is an algorithm that solves the problem P it doesn't mean he is unique.
+As a refinement, it is sufficient to mark the numbers in step 3 starting from $p^2$, as all the smaller multiples of p will have already been marked at that point. This means that the algorithm is allowed to terminate in step 4 when p2 is greater than n
 
-For example, there are algorithms like: \textbf{QuickSort}, \textbf{MergeSort}, \textbf{TreeSort},
-sorting by selection and insertion etc. which are used for the same purpose.
+Another refinement is to initially list odd numbers only, \textit{(3, 5, ..., n)}, and count in increments of $2p$ from $p^2$ in step 3, thus marking only odd multiples of p. This actually appears in the original algorithm. This can be generalized with wheel factorization, forming the initial list only from numbers coprime with the first few primes and not just from odds (i.e., numbers coprime with 2), and counting in the correspondingly adjusted increments so that only such multiples of p are generated that are coprime with those small primes, in the first place.
 
-Therefore, there is a need to choose an algorithm from
-the class of algorithms that solve the problem P corresponding to some
-requirements. The algorithm depends on the application, implementation, environment,
-frequency of use etc. Comparing algorithms is a process
-subtle that has several aspects in mind. Next, we'll look at some ways to implement 
-a few of the most popular sorting algorithms.
+\subsubsection*{Example}
+
+To find all the prime numbers less than or equal to 30, proceed as follows.
+
+First, generate a list of integers from 2 to 30:
+
+\begin{center}
+  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+\end{center}
+
+The first number in the list is 2; cross out every 2nd number in the list after 2 by counting up from 2 in increments of 2 (these will be all the multiples of 2 in the list):
+
+\begin{center}
+  2  3  \sout{4}  5  \sout{6}  7  \sout{8}  9  \sout{10} 11 \sout{12} 13 \sout{14} 15 \sout{16} 17 \sout{18} 19 \sout{20} 21 \sout{22} 23 \sout{24} 25 \sout{26} 27 \sout{28} 29 \sout{30}
+\end{center}
+
+The next number in the list after 2 is 3; cross out every 3rd number in the list after 3 by counting up from 3 in increments of 3 (these will be all the multiples of 3 in the list):
+
+\begin{center}
+  2  3  \sout{4}  5  \sout{6}  7  \sout{8}  \sout{9}  \sout{10} 11 \sout{12} 13 \sout{14} \sout{15} \sout{16} 17 \sout{18} 19 \sout{20} \sout{21} \sout{22} 23 \sout{24} 25 \sout{26} \sout{27} \sout{28} 29 \sout{30}
+\end{center}
+
+The next number not yet crossed out in the list after 3 is 5; cross out every 5th number in the list after 5 by counting up from 5 in increments of 5 (i.e. all the multiples of 5):
+
+\begin{center}
+  2  3  \sout{4}  5  \sout{6}  7  \sout{8}  \sout{9}  \sout{10} 11 \sout{12} 13 \sout{14} \sout{15} \sout{16} 17 \sout{18} 19 \sout{20} \sout{21} \sout{22} 23 \sout{24} \sout{25} \sout{26} \sout{27} \sout{28} 29 \sout{30}
+\end{center}
+
+The next number not yet crossed out in the list after 5 is 7; the next step would be to cross out every 7th number in the list after 7, but they are all already crossed out at this point, as these numbers (14, 21, 28) are also multiples of smaller primes because 7 × 7 is greater than 30. The numbers not crossed out at this point in the list are all the prime numbers below 30:
+
+\begin{center}
+  2  3     5     7           11    13          17    19          23                29
+\end{center}
 
 \newpage
 
 \subsection{Algorithms}
 
-\subsubsection{QuickSort}
+Required algorithms to implement in a programming language.
 
-QuickSort is a Divide and Conquer algorithm. It picks an element as pivot 
-and partitions the given array around the picked pivot. There are many different 
-versions of quickSort that pick pivot in different ways. 
+\begin{multicols}{2}
 
-\begin{enumerate}
-  \item Always pick first element as pivot.
-  \item Always pick last element as pivot.
-  \item Pick a random element as pivot.
-  \item Pick median as pivot (implemented below).
-\end{enumerate}
+\subsubsection{Algorithm 1}
 
 \begin{lstlisting}
-  /* low  --> Starting index,  high  --> Ending index */
-  quickSort(arr[], low, high)
-  {
-      if (low < high)
-      {
-          /* pi is partitioning index, arr[pi] is now
-            at right place */
-          pi = partition(arr, low, high);
-
-          quickSort(arr, low, pi - 1);  // Before pi
-          quickSort(arr, pi + 1, high); // After pi
+  c[1] = false;
+  i = 2;
+  while (i <= n){
+    if (c[i] == true) {
+      j = 2*i;
+      while (j <= n) {
+        c[j] = false;
+        j = j + i;
       }
+    }
+    i = i + 1;
+  }
+\end{lstlisting}
+
+\subsubsection{Algorithm 2}
+
+\begin{lstlisting}
+  c[1] = false;
+  i = 2;
+  while (i <= n) {
+    j=2*i;
+    while (j <= n) {
+      c[j] = false;
+      j = j + i;
+    }
+    i = i + 1;
+  }
+\end{lstlisting}
+
+\hfill \break
+
+\subsubsection{Algorithm 3}
+
+\begin{lstlisting}
+  c[1] = false;
+  i = 2;
+  while (i <= n) {
+    if (c[i] == true) {
+      j = i + 1;
+      while (j <= n) {
+          if (j % i == 0) {
+          c[j] = false;
+          }
+          j = j + 1;
+      }
+    }
+    i = i + 1;
+  }
+\end{lstlisting}
+
+\subsubsection{Algorithm 4}
+
+\begin{lstlisting}
+  c[1] = false;
+  i = 2;
+  While (i <= n) {
+    j = 2;
+    while (j < i) {
+      if ( i % j == 0) {
+        c[i] = false
+      }
+      j = j + 1;
+    }
+    i = i + 1;
+  }
+\end{lstlisting}
+\end{multicols}
+
+\newpage
+\subsubsection{Algorithm 5}
+
+\begin{lstlisting}
+  c[1] = faux;
+  i = 2;
+  while (i<=n) {
+    j = 2;
+    while (j <= sqrt(i)) {
+      if (i % j == 0) {
+        c[i] = false;
+      }
+      j++;
+    }
+    i++;
   }
 \end{lstlisting}
 
 \newpage
 
-\subsubsection{Merge Sort}
-
-Like QuickSort, Merge Sort is a Divide and Conquer 
-algorithm. It divides the input array into two halves, 
-calls itself for the two halves, and then merges the two sorted halves. 
-The merge() function is used for merging two halves. The merge(arr, l, m, r) 
-is a key process that assumes that arr[l..m] and arr[m+1..r] are sorted and 
-merges the two sorted sub-arrays into one.
-
-\begin{lstlisting}
-  MergeSort(arr[], l,  r)
-  If r > l
-      1. Find the middle point to divide the array into two halves:  
-              middle m = l+ (r-l)/2
-      2. Call mergeSort for first half:   
-              Call mergeSort(arr, l, m)
-      3. Call mergeSort for second half:
-              Call mergeSort(arr, m+1, r)
-      4. Merge the two halves sorted in step 2 and 3:
-              Call merge(arr, l, m, r)
-\end{lstlisting}
-
-The following diagram from wikipedia shows the complete merge sort process 
-for an example array {38, 27, 43, 3, 9, 82, 10}. If we take a closer look 
-at the diagram, we can see that the array is recursively divided into two 
-halves till the size becomes 1. Once the size becomes 1, the merge processes 
-come into action and start merging arrays back till the complete array is merged.
-
-\begin{center}
-  \includegraphics[width=7cm]{merge.png}
-\end{center}
-
-\newpage
-
-\subsubsection{Heap Sort}
-
-Heap sort is a comparison-based sorting technique based on 
-Binary Heap data structure. It is similar to selection sort 
-where we first find the minimum element and place the minimum element 
-at the beginning. We repeat the same process for the remaining elements.
-
-\subparagraph{What is Binary Heap?}
-
-\hfill \break
-\indent A \textbf{binary heap} is a heap, i.e, a tree which obeys 
-the property that the root of any tree is greater 
-than or equal to (or smaller than or equal to) all 
-its children (heap property). The primary use of such a data structure is 
-to implement a priority queue.
-
-\subparagraph{How to “heapify” a tree?}
-
-\hfill \break
-\indent The process of reshaping a binary tree into a Heap data structure is known 
-as \textbf{heapify}. A binary tree is a tree data structure that has two child nodes at max. 
-If a node's children nodes are \textbf{heapified}, then only \textbf{heapify} process can be applied 
-over that node. A heap should always be a complete binary tree. 
-
-Starting from a complete binary tree, we can modify it to become a Max-Heap by 
-running a function called \textbf{heapify} on all the non-leaf elements of the heap. i.e. 
-\textbf{heapify} uses recursion.
-
-\hfill \break
-\begin{lstlisting}
-   heapify(array)
-   Root = array[0]
-   Largest = largest( array[0] , array [2 * 0 + 1]. array[2 * 0 + 2])
-   if(Root != Largest)
-       Swap(Root, Largest)
-\end{lstlisting}
-
-\newpage
-
-\subsubsection{Cocktail Sort}
-
-Cocktail Sort is a variation of Bubble sort. 
-Bubble sort algorithm always traverses elements from left 
-and moves the largest element to its correct position in first 
-iteration and second largest in second iteration and so on. Cocktail 
-Sort traverses through a given array in both directions alternatively. 
-
-Each iteration of the algorithm is broken up into 2 stages: 
-
-\begin{enumerate}
-  \item The first stage loops through the array from left to right, just like the Bubble Sort. During the loop, adjacent items are compared and if value on the left is greater than the value on the right, then values are swapped. At the end of first iteration, largest number will reside at the end of the array.
-  \item The second stage loops through the array in opposite direction- starting from the item just before the most recently sorted item, and moving back to the start of the array. Here also, adjacent items are compared and are swapped if required.
-\end{enumerate}
-
-\newpage
-
 \section{Code}
+
+This section shows my implementation and result for the 5 given Sieve of Eratosthenes algorithms.
 
 \subsection{Implementation}
 
-\lstinputlisting[language=Python]{../SORTLIB.py}
-
-\subsection{Time Complexity}
-
-\subsubsection*{Quick Sort}
-\begin{itemize}
-  \item \textbf{Worst Case}: The worst case occurs when the partition process always picks greatest or smallest element as pivot. If we consider above partition strategy where last element is always picked as pivot, the worst case would occur when the array is already sorted in increasing or decreasing order. \textbf{\textit{$\Omega(n^2)$}}. 
-  \item \textbf{Best Case}: The best case occurs when the partition process always picks the middle element as pivot. Following is recurrence for best case: $O(n\cdot log(n))$
-\end{itemize}
-
-\subsubsection*{Merge Sort}
-
-Time Complexity: Sorting arrays on different machines. Merge Sort is a recursive algorithm and time complexity can be expressed as following recurrence relation. 
-
-$$
-  T(n) = 2T\frac{n}{2} + O(n)
-$$
-
-The above recurrence can be solved either using the Recurrence Tree method or the Master method. It falls in case II of Master Method and the solution of the recurrence is $O(n\cdot log(n))$. Time complexity of Merge Sort is  $O(n\cdot log(n))$ in all 3 cases (worst, average and best) as merge sort always divides the array into two halves and takes linear time to merge two halves.
-
-\subsubsection*{Heap Sort}
-
-Time complexity of heapify is $O(log(n))$. Time complexity of createAndBuildHeap() is O(n) and the overall time complexity of Heap Sort is $O(n\cdot log(n))$.
-
-\subsubsection*{Cocktail Sort}
-
-\begin{itemize}
-  \item \textbf{Worst and Average Case Time Complexity:} $O(n^2)$. 
-  \item \textbf{Best Case Time Complexity:} $O(n)$. Best case occurs when array is already sorted.
-\end{itemize}
+\lstinputlisting[language=Python]{../SIEVE.py}
 
 \newpage
 
-\subsection{Graphs}
+\subsection{Algorithmic complexity}
+
+The sieve of Eratosthenes is a popular way to benchmark computer 
+performance. The time complexity of calculating all primes below 
+n in the random access machine model is O(n log log n) operations, 
+a direct consequence of the fact that the prime harmonic series 
+asymptotically approaches log log n. It has an exponential time 
+complexity with regard to input size, though, which makes it a 
+pseudo-polynomial algorithm. The basic algorithm requires O(n) of memory.
+
+The bit complexity of the algorithm is O(n (log n) (log log n)) 
+bit operations with a memory requirement of O(n).
+
+The normally implemented page segmented version has the same operational 
+complexity of O(n log log n) as the non-segmented version but reduces the 
+space requirements to the very minimal size of the segment page plus the 
+memory required to store the base primes less than the square root of the 
+range used to cull composites from successive page segments of size $O(\frac{\sqrt{n}}{log(n)})$.
+
+A special (rarely, if ever, implemented) segmented version of the sieve of Eratosthenes, 
+with basic optimizations, uses O(n) operations and $O(\sqrt{n}\frac{log\ log\ n}{log \ n})$ bits of memory.
+
+\subsection{Graph / Results}
 
 \begin{center}
-  \includegraphics[width=15cm]{graph.png}
+  \includegraphics[width=13cm]{graph.png}
 \end{center}
+
+\newpage
 
 \section{Conclusion}
 
-During this laboratory work, I studied and analyzed four 
-of the most popular sorting algorithms, each with it's upsides and downsides. 
-Efficient sorting is important for optimizing the efficiency of other 
-algorithms (such as search and merge algorithms) 
-that require input data to be in sorted lists. Sorting is also often 
-useful for canonicalizing data and for producing human-readable output.
+To conclude, the current piece of work represents my personal implementation of 
+5 algorithms for obtaining Eratosthenes Sieve. The programming language I chose is 
+Python. The results show the time performance in seconds based on the N limit. 
+As you can see in the \textit{Figure 1}, the first 3 algorithms performed the best with 
+a complexity of O(0), while the last 2 - $O(n^2)$ and $O(log \ n)$.  
 
-I have tested all the algorithm on 10 arrays within a range of 0 to 10000 elements, 
-randomly generated from 0 to 200. Based on the results and the computing time, I can 
-say that the \textbf{Cocktail Sort} performed the worst with a time complexity of \textit{nlogn}. 
-Meanwhile the rest of them performed too good, almost close to 0. Which is why I am unable 
-to tell which is the fastest. But in my opinion, the \textbf{Merge Sort} was easier to implement.
-
-\subsection{References}
+\subsection*{References}
 
 \begin{itemize}
   \item https://github.com/IuraCPersonal/FAF203-CC
 \end{itemize}
-
 
 \end{document}
 
