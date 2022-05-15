@@ -1,0 +1,125 @@
+%===========================================%
+%=            LaTeX Title Page             =%
+%===========================================%
+
+%===========================================%
+%=               Packages                  =%
+
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{transparent}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[bottom=20mm]{geometry}
+
+%=                                         =%
+%===========================================%
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\baselinestretch}{2.0}
+
+\setlength{\parskip}{-3em}
+\pagestyle{fancy}
+\fancyhf{}
+
+
+%===========================================%
+%=            Fira Mono Font               =%
+
+% \usepackage{FiraMono}
+% \renewcommand*\familydefault{\ttdefault} %% Only if the base font of the document is to be typewriter style
+% \usepackage[T1]{fontenc}
+
+\usepackage{times}
+
+%=                                         =%
+%===========================================%
+
+
+%===========================================%
+%=            Footer Text                  =%
+
+\cfoot{Chişinău 2022}
+
+%=                                         =%
+%===========================================%
+
+\begin{document}
+
+% Defines a new command for the horizontal lines, change thickness here
+\newcommand{\HRule}{\rule{\linewidth}{0.2mm}}
+
+% Center everything on the page
+\center
+
+%===========================================%
+%=            Univeristy Name              =%
+
+\textsc{
+    \LARGE Technical University of Moldova
+}\\[0cm]
+
+\textsc{
+    Faculty of Computers, Informatics and Microelectronics
+}\\[0cm]
+
+\textsc{
+    Department: \textbf{Software Engineering and Automation}
+}\\[4cm]
+
+%=                                         =%
+%===========================================%
+
+
+%===========================================%
+%=            Subject - Lab Num            =%
+
+\textsc{
+    \Large CC - Laboratory Work Nr 5
+}\\[0cm]
+
+%=                                         =%
+%===========================================%
+
+
+%===========================================%
+%=            Laboratory Title             =%
+
+\HRule \\[0.6cm]
+{ \huge \bfseries N-th Digit of $\pi$ }\\[0.1cm]
+\HRule \\[1.5cm]
+
+%=                                         =%
+%===========================================%
+
+
+%===========================================%
+%=                 Logo                    =%
+
+{\includegraphics[width=5cm]{logo.PNG}}\\[1cm]
+% {\includegraphics[width=5cm]{logo2.PNG}}\\[1cm]
+
+%=                                         =%
+%===========================================%
+
+
+%===========================================%
+%=           Name and Group                =%
+
+\begin{center}
+    \begin{tabular}{ c c }
+        Ciuş Iurie & FAF-203
+    \end{tabular}
+\end{center}
+
+%=                                         =%
+%===========================================%
+
+\end{document}
