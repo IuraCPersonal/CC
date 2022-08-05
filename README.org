@@ -1,0 +1,28 @@
+#+TITLE: CC Laboratory Works
+#+AUTHOR: IuraCPersonal FAF203
+
+* Introduction
+
+** About Course
+
+The object of the "Algorithmic" discipline is the study of algorithms from the perspective of elaboration and their analysis.
+
+** About this Repository
+
+This repository contains homework assignments and laboratory works for the =CC= course here at =TUM FCIM=.
+
+All the solutions are written in =Python=.
+
+* Progress
+
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB1][LAB1]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB2][LAB2]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB3][LAB3]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB4][LAB4]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB5][LAB5]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB6][LAB6]]
++ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB7][LAB7]]
+
+* Contact
+
+If you have any question, please contact me through email: =iurie.cius@isa.utm.md=.
