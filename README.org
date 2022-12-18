@@ -1,28 +1,34 @@
-#+TITLE: CC Laboratory Works
-#+AUTHOR: IuraCPersonal FAF203
+#+TITLE: COMPUTABILITY AND COMPLEXITY LABORATORY WORKS
+#+AUTHOR: FCIM FAF 203 Cius Iurie
 
-* Introduction
+** 👋 TABLE OF CONTENTS :toc:
+  - [[#-introduction][📑 INTRODUCTION]]
+  - [[#-progress][🎯 PROGRESS]]
+  - [[#-contact][📮 CONTACT]]
 
-** About Course
+** 📑 INTRODUCTION
 
-The object of the "Algorithmic" discipline is the study of algorithms from the perspective of elaboration and their analysis.
-
-** About this Repository
+*** About this Repository
 
 This repository contains homework assignments and laboratory works for the =CC= course here at =TUM FCIM=.
 
 All the solutions are written in =Python=.
 
-* Progress
+** 🎯 PROGRESS
 
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB1][LAB1]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB2][LAB2]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB3][LAB3]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB4][LAB4]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB5][LAB5]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB6][LAB6]]
-+ ✔ [[https://github.com/IuraCPersonal/cc/tree/main/LAB7][LAB7]]
+| Laboratory No. | Status |
+|----------------+---------------|
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB1][LAB1]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB2][LAB2]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB3][LAB3]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB4][LAB4]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB5][LAB5]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB6][LAB6]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/cc/tree/main/LAB7][LAB7]]   | =DONE= |
+|----------------+---------------|
 
-* Contact
+
+** 📮 CONTACT
 
 If you have any question, please contact me through email: =iurie.cius@isa.utm.md=.
+
